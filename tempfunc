@@ -1,0 +1,45 @@
+#include <iostream>
+#include <string>
+using namespace std;
+template <class T>
+void swapValues(T &a, T &b)
+{
+T temp;
+temp = a;
+a = b;
+b = temp;
+}
+int main()
+{
+// Integer variables
+int x = 10, y = 20;
+cout <<"Before Swapping Integers:" << x << " " << y << endl;
+swapValues(x, y);
+cout << "After Swapping Integers: "<< x << " " << y << endl;
+// Float variables
+float p = 5.5, q = 9.5;
+cout << "\nBefore Swapping Floats:"<< p << " " << q << endl;
+swapValues(p, q);
+cout << "After Swapping Floats:"<< p << " " << q << endl;
+// String variables
+string s1 = "Harsha", s2 = "Varsha";
+cout << "\nBefore Swapping Strings:"<<s1<< " " <<s2<< endl;
+swapValues(s1, s2);
+cout << "After Swapping Strings:"<<s1<< " " <<s2 << endl;
+// Integer variables
+cout<<"\nEnter two integer values";
+cin>>x>>y;
+swapValues(x, y);
+cout << "After Swapping Integers: "<< x << " " << y << endl;
+// Float variables
+cout<<"Enter two float values";
+cin>>p>>q;
+swapValues(p, q);
+cout << "After Swapping Float Values:"<< p<<" "<< q << endl;
+// String variables
+cout<<"Enter two strings";
+cin>>s1>>s2;
+swapValues(s1, s2);
+cout<<"After Swapping String Values:"<<s1<<" "<<s2 <<endl;
+return 0;
+}
