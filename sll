@@ -1,0 +1,213 @@
+#include <iostream>
+using namespace std;
+class Node {
+public:
+int data;
+Node *next;
+Node(int value) {
+data = value;
+next = NULL;
+}
+};
+// Singly Linked List ADT
+class SinglyLinkedList
+{
+private:
+Node *head;
+public:
+SinglyLinkedList()
+{
+head = NULL;
+}
+//Creating Singly Linked List
+void create()
+{
+int value;
+char choice;
+do{
+cout<<"Enter an element in singly linked list: ";
+cin>>value;
+Node *newNode = new Node(value);
+if (head == NULL) {
+head = newNode;
+}
+else {
+Node *temp = head;
+while (temp->next != NULL)
+{
+temp = temp->next;
+}
+temp->next = newNode;
+}
+cout<<"would u like to insert node? (y/n)";
+cin>>choice;
+} while(choice != 'n');
+}
+//Inserting Node at Beginning
+void insertAtBeginning(int value) {
+Node *newNode = new Node(value);
+newNode->next = head;
+head = newNode;
+}
+//Inserting Node at End
+void insertAtEnd(int value)
+{
+Node *newNode = new Node(value);
+if (head == NULL) {
+head = newNode;
+return;
+}
+Node *temp = head;
+while (temp->next != NULL)
+{
+temp = temp->next;
+}
+temp->next = newNode;
+}
+//Inserting Node at Given Position
+void insertAtPosition(int value, int pos)
+{
+if (pos == 1) {
+Node *newNode = new Node(value);
+newNode->next = head;
+head = newNode;
+return;
+}
+Node *newNode = new Node(value);
+Node *temp = head;
+for (int i = 1; i < pos - 1 && temp != NULL; i++)
+{
+temp = temp->next;
+}
+if (temp == NULL) {
+cout << "Invalid Position\n";
+return;
+}
+newNode->next = temp->next;
+temp->next = newNode;
+}
+//Delete Node From Beginning
+void deleteFromBeginning() {
+if (head == NULL) {
+cout << "List is Empty\n";
+return;
+}
+Node *temp = head;
+head = head->next;
+delete temp;
+}
+//Delete Node From End
+void deleteFromEnd()
+{
+if (head == NULL) {
+cout << "List is Empty\n";
+return;
+}
+if (head->next == NULL) {
+delete head;
+head = NULL;
+return;
+}
+Node *temp = head;
+while (temp->next->next != NULL)
+{
+temp = temp->next;
+}
+delete temp->next;
+temp->next = NULL;
+}
+//Delete Node From Given Position
+void deleteFromPosition(int pos) {
+if (head == NULL) {
+cout << "List is Empty\n";
+return;
+}
+if (pos == 1) {
+Node *temp = head;
+head = head->next;
+delete temp;
+return;
+}
+Node *temp = head;
+for (int i = 1; i < pos - 1 && temp->next != NULL; i++)
+temp = temp->next;
+if (temp->next == NULL) {
+cout << "Invalid Position\n";
+return;
+}
+Node *delNode = temp->next;
+temp->next = delNode->next;
+delete delNode;
+}
+//Searching a Node in Singly Linked List
+void search(int key)
+{
+Node *temp = head;
+int pos = 1;
+while (temp != NULL) {
+if (temp->data == key) {
+cout << "\nElement found at position " << pos << endl;
+return;
+}
+temp = temp->next;
+pos++;
+}
+cout << "Element not found\n";
+}
+// Counting Number of Nodes in a Singly Linked List
+int countNodes() {
+int count = 0;
+Node *temp = head;
+while (temp != NULL) {
+count++;
+temp = temp->next;
+}
+return count;
+}
+//Reversing the Elements of Singly Linked List
+void reverseList() {
+Node *prev = NULL, *current = head, *next = NULL;
+while (current != NULL) {
+next = current->next;
+current->next = prev;
+prev = current;
+current = next;
+}
+head = prev;
+}
+//Traversing or Displaying The Elements of Singly Linked List
+void display() {
+Node *temp = head;
+cout<<"\nThe Singly Linked List is \n";
+while (temp != NULL) {
+cout << temp->data <<" ";
+temp = temp->next;
+}
+}
+}; //End of Class
+int main()
+{
+SinglyLinkedList list;
+cout<<"Linked List Creation "<<endl ;
+list.create();
+cout<<"\nThe Singly linked list after creation :";
+list.display();
+list.insertAtBeginning(115);
+list.insertAtBeginning(125);
+list.insertAtEnd(150);
+list.insertAtPosition(113, 3);
+list.insertAtPosition(118, 4);
+cout<<"\nThe Singly linked list after Insertion :";
+list.display();
+list.deleteFromBeginning();
+list.deleteFromEnd();
+list.deleteFromPosition(3);
+cout<<"\nThe Singly linked list after Deletion :";
+list.display();
+list.search(115);
+cout<<"The number of nodes is : " <<list.countNodes();
+list.reverseList();
+cout<<"\nThe Singly linked list after Reversing List :";
+list.display();
+return 0;
+}
