@@ -1,0 +1,22 @@
+#include <iostream>
+#include <map>
+#include <string>
+using namespace std;
+int main()
+{
+// Creating a map (StudentID -> Name)
+map<int, string> students;
+// Inserting elements into the map
+students[101] = "Harsha";
+students[102] = "Varsha";
+students[103] = "Kiran";
+students[104] = "Amit";
+// Displaying all elements using iterator
+cout << "Student Records:\n";
+map<int, string>::iterator it;
+for (it = students.begin(); it != students.end(); ++it)
+{
+cout<<"Student ID:"<<it->first<<" Name:" <<it->second<< endl;
+}
+return 0;
+}
