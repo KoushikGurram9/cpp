@@ -1,0 +1,75 @@
+#include <iostream>
+#include <string>
+using namespace std;
+// Student Class Definition
+class Student
+{
+private:
+int rollNumber;
+string name;
+float marks;
+public:
+// Default Constructor
+Student()
+{
+rollNumber = 0;
+name = " ";
+marks = 0.0;
+cout << "Student object created.";
+}
+// Parameterized Constructor
+Student(int r, string n, float m)
+{
+rollNumber = r;
+name = n;
+marks = m;
+cout << "Student object initialized." ;
+}
+// Function to input student details
+void input()
+{
+cout << "Enter Roll Number: ";
+cin >> rollNumber;
+cout << "Enter Name: ";
+cin>>name;
+cout << "Enter Marks: ";
+cin >> marks;
+}
+// Function to display student details
+void display()
+{
+cout << "\nRoll Number : " << rollNumber << " ";
+cout << "Name : " << name << " ";
+cout << "Marks : " << marks << " ";
+}
+// Destructor
+~Student()
+{
+cout << "\nStudent object with Roll No "
+<< rollNumber << " is deleted." ;
+}
+};
+//main() function
+int main()
+{
+int n;
+cout << "Enter number of students: ";
+cin >> n;
+// Dynamic allocation of array of objects
+Student *stud = new Student[n];
+cout << "\n Enter Student Details";
+for (int i = 0; i < n; i++)
+{
+cout << "\n Student " << i + 1 << endl;
+stud[i].input();
+}
+// Display student details
+cout << "\n----- The Students Data is -----\n";
+for (int i = 0; i < n; i++)
+{
+stud[i].display();
+}
+// Releasing dynamically allocated memory
+delete[] stud;
+return 0;
+}
