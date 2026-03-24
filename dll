@@ -1,0 +1,210 @@
+#include <iostream>
+using namespace std;
+// Node Structure for Doubly Linked List
+class Node {
+public:
+int data;
+Node *prev;
+Node *next;
+Node(int value) {
+data = value;
+prev = NULL;
+next = NULL;
+}
+};
+// Doubly Linked List ADT
+class DoublyLinkedList {
+private:
+Node *head;
+public:
+DoublyLinkedList() {
+head = NULL;
+}
+// Create Doubly Linked List
+void create() {
+int value;
+char choice;
+do {
+cout << "Enter an element in Doubly Linked List: ";
+cin >> value;
+Node *newNode = new Node(value);
+if (head == NULL) {
+head = newNode;
+}
+else {
+Node *temp = head;
+while (temp->next != NULL)
+temp = temp->next;
+temp->next = newNode;
+newNode->prev = temp;
+}
+cout << "Would you like to insert node? (y/n): ";
+cin >> choice;
+} while (choice != 'n');
+}
+// Insert node at Beginning of Doubly Linked List
+void insertAtBeginning(int value) {
+Node *newNode = new Node(value);
+if (head != NULL)
+head->prev = newNode;
+newNode->next = head;
+head = newNode;
+}
+// Insert node at End of Doubly Linked List
+void insertAtEnd(int value) {
+Node *newNode = new Node(value);
+if (head == NULL) {
+head = newNode;
+return;
+}
+Node *temp = head;
+while (temp->next != NULL)
+temp = temp->next;
+temp->next = newNode;
+newNode->prev = temp;
+}
+// Insert node at Given Position in a Doubly Linked List
+void insertAtPosition(int value, int pos) {
+if (pos == 1) {
+insertAtBeginning(value);
+return;
+}
+Node *newNode = new Node(value);
+Node *temp = head;
+for (int i = 1; i < pos - 1 && temp != NULL; i++)
+temp = temp->next;
+if (temp == NULL) {
+cout << "Invalid Position\n";
+return;
+}
+newNode->next = temp->next;
+newNode->prev = temp;
+if (temp->next != NULL)
+temp->next->prev = newNode;
+temp->next = newNode;
+}
+// Delete node from Beginning of Doubly Linked List
+void deleteFromBeginning() {
+if (head == NULL) {
+cout << "List is Empty\n";
+return;
+}
+Node *temp = head;
+head = head->next;
+if (head != NULL)
+head->prev = NULL;
+delete temp;
+}
+// Delete Node from End Doubly Linked List
+void deleteFromEnd() {
+if (head == NULL) {
+cout << "List is Empty\n";
+return;
+}
+if (head->next == NULL) {
+delete head;
+head = NULL;
+return;
+}
+Node *temp = head;
+while (temp->next != NULL)
+temp = temp->next;
+temp->prev->next = NULL;
+delete temp;
+}
+// Delete Node from Given Position of Doubly Linked List
+void deleteFromPosition(int pos) {
+if (head == NULL) {
+cout << "List is Empty\n";
+return;
+}
+if (pos == 1) {
+deleteFromBeginning();
+return;
+}
+Node *temp = head;
+for (int i = 1; i < pos && temp != NULL; i++)
+temp = temp->next;
+if (temp == NULL) {
+cout << "Invalid Position\n";
+return;
+}
+if (temp->next != NULL)
+temp->next->prev = temp->prev;
+if (temp->prev != NULL)
+temp->prev->next = temp->next;
+delete temp;
+}
+// Search for a Node in Doubly Linked List
+void search(int key) {
+Node *temp = head;
+int pos = 1;
+while (temp != NULL) {
+if (temp->data == key) {
+cout << "\nElement found at position " << pos << endl;
+return;
+}
+temp = temp->next;
+pos++;
+}
+cout << "Element not found\n";
+}
+// Count Number of Nodes in Doubly Linked List
+int countNodes() {
+int count = 0;
+Node *temp = head;
+while (temp != NULL) {
+count++;
+temp = temp->next;
+}
+return count;
+}
+// Reverse the Elements of Doubly Linked List
+void reverseList() {
+Node *temp = NULL;
+Node *current = head;
+while (current != NULL) {
+temp = current->prev;
+current->prev = current->next;
+current->next = temp;
+current = current->prev;
+}
+if (temp != NULL)
+head = temp->prev;
+}
+// Traverse or Display Doubly Linked List
+void display() {
+Node *temp = head;
+cout << "\nThe Doubly Linked List is\n";
+while (temp != NULL) {
+cout << temp->data << " ";
+temp = temp->next;
+}
+}
+};
+// Main Function
+int main() {
+DoublyLinkedList list;
+cout << "Doubly Linked List Creation\n";
+list.create();
+cout << "\nThe Doubly linked list after creation:";
+list.display();
+list.insertAtBeginning(115);
+list.insertAtBeginning(125);
+list.insertAtEnd(150);
+list.insertAtPosition(113, 3);
+list.insertAtPosition(118, 4);
+cout << "\nThe Doubly linked list after Insertion:";
+list.display();
+list.deleteFromBeginning();
+list.deleteFromEnd();
+list.deleteFromPosition(3);
+cout << "\nThe Doubly linked list after Deletion:";
+list.display();
+list.search(115);
+cout << "The number of nodes is : " << list.countNodes();
+list.reverseList();
+cout << "\nThe Doubly linked list after Reversing List:";
+list.display();
+return 0;
+}
