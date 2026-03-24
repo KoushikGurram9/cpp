@@ -1,0 +1,24 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+int main()
+{
+// Creating a vector of integers
+vector<int> numbers;
+// Inserting elements into the vector
+numbers.push_back(10);
+numbers.push_back(20);
+numbers.push_back(30);
+numbers.push_back(40);
+numbers.push_back(50);
+numbers.push_back(60);
+// Displaying elements using iterator
+cout << "Vector elements are: ";
+vector<int>::iterator it;
+for (it = numbers.begin(); it != numbers.end(); ++it)
+{
+cout << *it << " ";
+}
+cout << endl;
+return 0;
+}
