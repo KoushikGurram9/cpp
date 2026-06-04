@@ -1,0 +1,220 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <chrono>
+using namespace std;
+using namespace std::chrono;
+
+// ================= LINEAR LIST =================
+class LinearDictionary {
+    int arr[100];
+    int size;
+
+public:
+    LinearDictionary() { size = 0; }
+
+    void insert(int key) {
+        arr[size++] = key;
+    }
+
+    void remove(int key) {
+        for (int i = 0; i < size; i++) {
+            if (arr[i] == key) {
+                for (int j = i; j < size - 1; j++)
+                    arr[j] = arr[j + 1];
+                size--;
+                return;
+            }
+        }
+    }
+
+    int search(int key) {
+        int steps = 0;
+        for (int i = 0; i < size; i++) {
+            steps++;
+            if (arr[i] == key)
+                return steps;
+        }
+        return steps; // not found
+    }
+
+    void display() {
+        for (int i = 0; i < size; i++)
+            cout << arr[i] << " ";
+        cout << endl;
+    }
+};
+
+// ================= SKIP LIST =================
+#define MAX_LEVEL 3
+#define P 0.5
+
+struct SkipNode {
+    int key;
+    SkipNode** forward;
+
+    SkipNode(int k, int level) {
+        key = k;
+        forward = new SkipNode*[level + 1];
+        for (int i = 0; i <= level; i++)
+            forward[i] = NULL;
+    }
+};
+
+class SkipList {
+    int level;
+    SkipNode* header;
+
+public:
+    SkipList() {
+        level = 0;
+        header = new SkipNode(-1, MAX_LEVEL);
+    }
+
+    int randomLevel() {
+        int lvl = 0;
+        while ((rand() / (double)RAND_MAX) < P && lvl < MAX_LEVEL)
+            lvl++;
+        return lvl;
+    }
+
+    void insert(int key) {
+        SkipNode* update[MAX_LEVEL + 1];
+        SkipNode* current = header;
+
+        for (int i = level; i >= 0; i--) {
+            while (current->forward[i] && current->forward[i]->key < key)
+                current = current->forward[i];
+            update[i] = current;
+        }
+
+        current = current->forward[0];
+
+        if (current == NULL || current->key != key) {
+            int rlevel = randomLevel();
+
+            if (rlevel > level) {
+                for (int i = level + 1; i <= rlevel; i++)
+                    update[i] = header;
+                level = rlevel;
+            }
+
+            SkipNode* newNode = new SkipNode(key, rlevel);
+
+            for (int i = 0; i <= rlevel; i++) {
+                newNode->forward[i] = update[i]->forward[i];
+                update[i]->forward[i] = newNode;
+            }
+        }
+    }
+
+    void remove(int key) {
+        SkipNode* update[MAX_LEVEL + 1];
+        SkipNode* current = header;
+
+        for (int i = level; i >= 0; i--) {
+            while (current->forward[i] && current->forward[i]->key < key)
+                current = current->forward[i];
+            update[i] = current;
+        }
+
+        current = current->forward[0];
+
+        if (current && current->key == key) {
+            for (int i = 0; i <= level; i++) {
+                if (update[i]->forward[i] != current)
+                    break;
+                update[i]->forward[i] = current->forward[i];
+            }
+
+            delete current;
+
+            while (level > 0 && header->forward[level] == NULL)
+                level--;
+        }
+    }
+
+    int search(int key) {
+        SkipNode* current = header;
+        int steps = 0;
+
+        for (int i = level; i >= 0; i--) {
+            while (current->forward[i] && current->forward[i]->key < key) {
+                current = current->forward[i];
+                steps++;
+            }
+        }
+
+        current = current->forward[0];
+        steps++;
+
+        if (current && current->key == key)
+            return steps;
+        else
+            return steps;
+    }
+
+    void display() {
+        cout << "Skip List:\n";
+        for (int i = level; i >= 0; i--) {
+            SkipNode* node = header->forward[i];
+            cout << "Level " << i << ": ";
+            while (node) {
+                cout << node->key << " ";
+                node = node->forward[i];
+            }
+            cout << endl;
+        }
+    }
+};
+
+// ================= MAIN =================
+int main() {
+    srand(time(0));
+
+    LinearDictionary ld;
+    SkipList sl;
+
+    int data[] = {10, 20, 30, 40, 50, 60, 70};
+
+    // Insert
+    for (int i = 0; i < 7; i++) {
+        ld.insert(data[i]);
+        sl.insert(data[i]);
+    }
+
+    cout << "Linear List: ";
+    ld.display();
+
+    sl.display();
+
+    int key = 60;
+
+    // Efficiency comparison
+    auto start1 = high_resolution_clock::now();
+    int stepsLinear = ld.search(key);
+    auto end1 = high_resolution_clock::now();
+
+    auto start2 = high_resolution_clock::now();
+    int stepsSkip = sl.search(key);
+    auto end2 = high_resolution_clock::now();
+
+    cout << "\nSearch Key: " << key << endl;
+
+    cout << "Linear List Steps: " << stepsLinear
+         << " Time: " << duration_cast<nanoseconds>(end1 - start1).count() << " ns\n";
+
+    cout << "Skip List Steps: " << stepsSkip
+         << " Time: " << duration_cast<nanoseconds>(end2 - start2).count() << " ns\n";
+
+    // Deletion
+    ld.remove(30);
+    sl.remove(30);
+
+    cout << "\nAfter Deletion (30):\n";
+    cout << "Linear List: ";
+    ld.display();
+    sl.display();
+
+    return 0;
+}
