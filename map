@@ -1,0 +1,19 @@
+#include<iostream>
+#include<map>
+#include<string>
+using namespace std;
+int main(){
+    map<int,string>m;
+    m.insert({101,"Alice"});
+    m.insert({102,"Bob"});
+    m.insert({103,"Jack"});
+    map<int,string>::iterator it;
+    for(it=m.begin();it!=m.end();it++){
+        cout<<"Student id:"<<it->first<<" Name:"<<it->second<<endl;
+    }
+    m.erase(102);
+    cout<<"After deleting: "<<endl;
+    for(it=m.begin();it!=m.end();it++){
+        cout<<"Student id:"<<it->first<<" Name:"<<it->second<<endl;
+    }
+}
