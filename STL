@@ -1,0 +1,81 @@
+#include <iostream>
+#include <vector>
+#include <list>
+#include <set>
+#include <map>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+
+    cout << "VECTOR\n";
+    vector<int> v = {5, 2, 8, 2, 1, 9, 2};
+
+    sort(v.begin(), v.end());
+
+    cout << "Sorted Vector: ";
+    for(int x : v)
+        cout << x << " ";
+    cout << endl;
+
+    auto vit = find(v.begin(), v.end(), 8);
+    if(vit != v.end())
+        cout << "8 found in vector\n";
+
+    cout << "Count of 2 in vector = "
+         << count(v.begin(), v.end(), 2) << endl;
+
+    cout << "\nLIST\n";
+    list<int> l = {30, 10, 20, 10, 40};
+
+    l.sort();
+
+    cout << "Sorted List: ";
+    for(int x : l)
+        cout << x << " ";
+    cout << endl;
+
+    auto lit = find(l.begin(), l.end(), 20);
+    if(lit != l.end())
+        cout << "20 found in list\n";
+
+    cout << "Count of 10 in list = "
+         << count(l.begin(), l.end(), 10) << endl;
+
+    cout << "\nSET\n";
+    set<int> s = {50, 20, 30, 10, 20, 40};
+
+    cout << "Set Elements: ";
+    for(int x : s)
+        cout << x << " ";
+    cout << endl;
+
+    auto sit = s.find(30);
+    if(sit != s.end())
+        cout << "30 found in set\n";
+
+    cout << "Count of 20 in set = "
+         << s.count(20) << endl;
+
+    cout << "\nMAP\n";
+    map<int, string> m;
+
+    m[1] = "Alice";
+    m[2] = "Bob";
+    m[3] = "Charlie";
+
+    cout << "Map Elements:\n";
+    for(auto p : m)
+        cout << p.first << " -> " << p.second << endl;
+
+    auto mit = m.find(2);
+    if(mit != m.end())
+        cout << "Key 2 found, Value = "
+             << mit->second << endl;
+
+    cout << "Count of key 3 = "
+         << m.count(3) << endl;
+
+    return 0;
+}
