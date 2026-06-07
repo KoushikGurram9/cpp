@@ -1,0 +1,20 @@
+#include<iostream>
+#include<list>
+#include<string>
+using namespace std;
+int main(){
+    list<string>s;
+    s.push_back("Koushik");
+    s.push_back("Gurram");
+    s.push_back("Vardhaman");
+    list<string>::iterator it;
+    cout<<"Elements in list are: \n";
+    for(it=s.begin();it!=s.end();it++){
+        cout<<*it<<" "<<endl;
+    }
+    s.remove("Vardhaman");
+    cout<<"List after deleting vardhaman: \n";
+    for(it=s.begin();it!=s.end();it++){
+        cout<<*it<<" "<<endl;
+    }
+}
