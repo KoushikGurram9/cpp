@@ -1,0 +1,49 @@
+import numpy as np
+import matplotlib.pyplot as plt
+# Define the function
+def f(x):
+ return x**3 - x**2-1
+# Input interval
+a = float(input("Enter lower limit (a): "))
+b = float(input("Enter upper limit (b): "))
+fa = f(a)
+fb = f(b)
+print("f(a) =", fa)
+print("f(b) =", fb)
+if fa * fb < 0:
+ print("Root lies in the interval [", a, ",", b, "]")
+elif fa == 0:
+ print("a is the root.")
+elif fb == 0:
+ print("b is the root.")
+else:
+ print("No root exists in the given interval.")
+ exit()
+print("\nIteration\tc")
+for i in range(50):
+ c = (a + b) / 2
+ print(i, "\t\t", format(c, ".5f"))
+ if f(a) * f(c) < 0:
+ b = c
+ else:
+ a = c
+ next_c = (a + b) / 2
+ if round(c, 4) == round(next_c, 4):
+ break
+print("\nNumber of iterations =", i)
+print("Root =", format(c, ".4f"))
+# Plot the graph
+x = np.linspace(-2, 5)
+y = f(x)
+plt.plot(x, y, color='orange', label=r'$f(x)=x^3-x^2-1$')
+plt.axhline(0, color='black')
+plt.scatter(c, f(c), color='blue', s=100, label="Root")
+plt.xlabel("x")
+plt.ylabel("f(x)")
+plt.title("Graph of f(x) and its root")
+plt.legend()
+plt.grid()
+plt.show()
+--------------------------------------
+  
+# Stop when correct up to 4 decimal places
