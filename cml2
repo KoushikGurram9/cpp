@@ -1,0 +1,74 @@
+import numpy as np
+import matplotlib.pyplot as plt
+A = np.array([[2, 1], [4, 5]])
+# Eigenvalues and eigenvectors
+eigenvalues, eigenvectors = np.linalg.eig(A)
+# Convert to real if imaginary parts are negligible
+eigenvalues = np.real_if_close(eigenvalues)
+eigenvectors = np.real_if_close(eigenvectors)
+print("Matrix A:")
+print(A)
+print("\nEigen Values and corresponding Eigen Vectors:")
+for i in range(len(eigenvalues)):
+ print(f"\nEigenvalue {i+1}: {eigenvalues[i]}")
+ print("Corresponding Eigenvector:")
+ print(eigenvectors[:, i].reshape(-1, 1))
+# Colors for eigenvectors
+colors = ['blue', 'red']
+# Plot eigenvectors
+for i in range(len(eigenvalues)):
+ plt.quiver(0, 0,
+ eigenvectors[0, i].real,
+ eigenvectors[1, i].real,
+ angles='xy',
+ scale_units='xy',
+ scale=1,
+ color=colors[i],
+ label=f"Eigenvector {i+1}")
+# Draw x and y axes
+plt.axhline(0, color='black', linewidth=1.5)
+plt.axvline(0, color='black', linewidth=1.5)
+# Display grid graph with axis limits, labels and title
+plt.xlabel("X-axis")
+plt.ylabel("Y-axis")
+plt.title("2D Plot of Eigenvectors")
+plt.xlim(-1.5, 1.5)
+plt.ylim(-1.5, 1.5)
+plt.grid(True)
+plt.legend()
+plt.show()
+  ---------------------
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+A = np.array([[1,1,1], [0,2,1], [-4,4,3]])
+eigenvalues, eigenvectors = np.linalg.eig(A)
+eigenvalues = np.real_if_close(eigenvalues)
+eigenvectors = np.real_if_close(eigenvectors)
+print("Matrix A:")
+print(A)
+print("\nEigen Values and corresponding Eigen Vectors:")
+for i in range(len(eigenvalues)):
+ print(f"\nEigenvalue {i+1}: {eigenvalues[i]}")
+ print("Corresponding Eigenvector:")
+ print(eigenvectors[:, i].reshape(-1, 1))
+colors = ['blue', 'red', 'green']
+# Create 3D figure
+fig = plt.figure(figsize=(7,7))
+ax = fig.add_subplot(111, projection='3d')
+# Plot eigenvectors
+for i in range(len(eigenvalues)):
+ ax.quiver(0, 0, 0,
+ eigenvectors[0,i],
+ eigenvectors[1,i],
+ eigenvectors[2,i],
+ color=colors[i],
+ length=1,
+ normalize=True,
+ label=f"Eigenvector {i+1}")
+ax.set_xlabel("X-axis")
+ax.set_ylabel("Y-axis")
+ax.set_zlabel("Z-axis")
+ax.set_title("3D Plot of Eigenvectors")
+plt.legend()
+plt.show()
