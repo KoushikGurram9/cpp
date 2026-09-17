@@ -1,0 +1,45 @@
+import numpy as np
+A = np.array([[2, 1],[4, 5]])
+# Check if matrix is square
+if A.shape[0] != A.shape[1]:
+ print("It is not square matrix!")
+else:
+ # Compute eigenvalues
+ eigenvalues = np.linalg.eigvals(A)
+ eigenvalues=np.real_if_close(eigenvalues)
+ print("\nMatrix A:")
+ print(A)
+ print("\nEigenvalues:")
+ print(eigenvalues)
+ # Check nature of eigenvalues
+ print("\nNature of Eigenvalues:")
+ for i, val in enumerate(eigenvalues):
+ if np.iscomplex(val):
+ print(f"Eigenvalue {i+1}: {val} → Complex")
+ else:
+ print(f"Eigenvalue {i+1}: {val} → Real")
+  ------------------------------------------
+  import matplotlib.pyplot as plt
+# Given eigenvalues
+real = [1, 1, 3]
+imag = [-1, 1, 0]
+# Plot eigenvalues
+plt.scatter(real, imag, color='blue', s=100, label='Eigenvalues')
+# Label the points
+plt.text(real[0], imag[0], r"$\lambda_1= 1-1j$")
+plt.text(real[1], imag[1], r"$\lambda_2= 1+1j$")
+plt.text(real[2], imag[2], r"$\lambda_3= 3$")
+# Draw X and Y axes
+plt.axhline(0, color='red')
+plt.axvline(0, color='red')
+# Set axis limits
+plt.xlim(-3, 4)
+plt.ylim(-3, 4)
+# Add title and labels
+plt.title("Plot of Eigenvalues")
+plt.xlabel("Real Part")
+plt.ylabel("Imaginary Part")
+# Display grid
+plt.grid(True)
+plt.show()
+plt.legend()
