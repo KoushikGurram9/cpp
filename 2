@@ -1,0 +1,28 @@
+#!/bin/bash
+
+echo -e "apple 10\nbanana 20\napple 10\norange 30" > file.txt
+
+echo "File contents:"
+cat file.txt
+
+echo "Lines containing apple:"
+grep "apple" file.txt
+
+echo "Second column:"
+cut -d' ' -f2 file.txt
+
+echo "Sum of second column:"
+awk '{sum += $2} END {print sum}' file.txt
+
+echo "Sorted file:"
+sort file.txt
+
+echo "Unique lines:"
+sort file.txt | uniq
+
+echo "Compare files:"
+cp file.txt file2.txt
+diff file.txt file2.txt
+
+echo "Convert lowercase to uppercase:"
+cat file.txt | tr 'a-z' 'A-Z'
