@@ -1,0 +1,6 @@
+#!/bin/bash
+
+file=$1
+keyword=$2
+
+grep -v "$keyword" "$file" > output.txt
