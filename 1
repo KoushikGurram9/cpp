@@ -1,0 +1,26 @@
+#!/bin/bash
+
+mkdir testdir
+cd testdir
+
+echo "Hello Linux" > file1.txt
+cp file1.txt file2.txt
+mv file2.txt file3.txt
+
+echo "Files:"
+ls
+
+echo "Current user:"
+who
+
+echo "Running processes:"
+ps
+
+echo "Disk space:"
+df -h
+
+echo "Directory space:"
+du -sh .
+
+echo "Finding text files:"
+find . -name "*.txt"
