@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+    echo "No arguments provided."
+    exit 1
+fi
+
+for arg in "$@"
+do
+    if [ -L "$arg" ]; then
+        echo "$arg is a symbolic link"
+    elif [ -d "$arg" ]; then
+        echo "$arg is a directory"
+    elif [ -f "$arg" ]; then
+        echo "$arg is a regular file"
+    else
+        echo "$arg does not exist"
+    fi
+done
