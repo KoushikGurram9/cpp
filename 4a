@@ -1,0 +1,24 @@
+#!/bin/bash
+
+for file in "$1"/*
+do
+    if [ -r "$file" ]; then
+        r="Yes"
+    else
+        r="No"
+    fi
+
+    if [ -w "$file" ]; then
+        w="Yes"
+    else
+        w="No"
+    fi
+
+    if [ -x "$file" ]; then
+        x="Yes"
+    else
+        x="No"
+    fi
+
+    printf "%-30s Read:%-5s Write:%-5s Execute:%-5s\n" "$file" "$r" "$w" "$x"
+done
